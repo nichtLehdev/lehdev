@@ -1,0 +1,156 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+    output   = "./generated/oldBahnClient"
+}
+
+datasource db {
+    provider = "mongodb"
+    url      = env("MONGODB_URI")
+}
+
+type stopMetaData {
+    ds100 String
+    name  String
+    eva   String
+    date  String
+}
+
+enum trainType {
+    UNKNOWN
+    AG
+    AKN
+    ALX
+    AS
+    AZS
+    BE
+    BRB
+    BUS
+    BZB
+    CB
+    CLR
+    D
+    DAB
+    DWE
+    EC
+    ECE
+    EN
+    ENO
+    ERX
+    ES
+    EVB
+    EX
+    FEX
+    FLX
+    HLB
+    HSB
+    IC
+    ICE
+    IR
+    IRE
+    KD
+    MBB
+    ME
+    MEX
+    N
+    NBE
+    NEG
+    NJ
+    NWB
+    OPB
+    OS
+    P
+    PRE
+    R
+    RB
+    RE
+    REX
+    RJ
+    RJX
+    RRB
+    RT
+    RTB
+    S
+    SAB
+    SBB
+    SDG
+    SOE
+    STB
+    STN
+    SWE
+    TGV
+    THA
+    TL
+    TLX
+    TRI
+    UEX
+    VBG
+    VEN
+    VIA
+    WB
+    WBA
+    WEG
+    WFB
+}
+
+enum trainFlag {
+    F
+    N
+    D
+    S
+    UNKNOWN // empty string
+}
+
+type stopJourneyData {
+    train       String
+    type        String
+    no          String
+    line        String
+    flag        String
+    origin      String
+    destination String
+}
+
+type stopStopData {
+    prev_station String
+    next_station String
+    ar_hrs       String
+    ar_min       String
+    dp_hrs       String
+    dp_min       String
+    platform     String
+}
+
+type statisticData {
+    date  String
+    hour  String
+    count Int
+}
+
+model station {
+    id          String  @id @default(auto()) @map("_id") @db.ObjectId
+    name        String
+    eva         String
+    ds100       String
+    db          String
+    creationts  String
+    selfclosing String  @map("self-closing")
+    fetchData   Boolean
+}
+
+model statistic {
+    id            String          @id @default(auto()) @map("_id") @db.ObjectId
+    eva           String
+    count         Int
+    insertedStops statisticData[]
+}
+
+model stop {
+    db_id   String          @id @default(auto()) @map("_id") @db.ObjectId
+    id      String          @db.String
+    meta    stopMetaData
+    journey stopJourneyData
+    stop    stopStopData
+}
