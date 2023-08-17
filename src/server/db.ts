@@ -1,11 +1,6 @@
 import { PrismaClient as OldBahnClient } from "../../prisma/generated/oldBahnClient";
 import { PrismaClient as BahnClient } from "../../prisma/generated/bahnClient";
-import { type PrismaClient } from "@prisma/client";
 import { env } from "~/env.mjs";
-
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined;
-};
 
 const bahnPrisma = globalThis as unknown as {
   prisma: BahnClient | undefined;
