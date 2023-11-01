@@ -6,15 +6,36 @@ generator client {
 }
 
 datasource db {
-    provider = "sqlite"
+    provider = "mysql"
     url      = env("DATABASE_URL")
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+model Giveaway_Entrant {
+    id          Int      @id @default(autoincrement())
+    giveaway_id Int
+    user_id     Int
+    created_at  DateTime @default(now())
+    updated_at  DateTime @updatedAt
+    Giveaway    Giveaway @relation(fields: [giveaway_id], references: [id])
+    User        User     @relation(fields: [user_id], references: [id])
+}
 
-    @@index([name])
+model Giveaway {
+    id                Int                @id @default(autoincrement())
+    title             String
+    description       String
+    image             String
+    created_at        DateTime           @default(now())
+    Giveaway_Entrants Giveaway_Entrant[]
+    created_by        User               @relation(fields: [created_by_id], references: [id])
+    created_by_id     Int
+}
+
+model User {
+    id                Int                @id @default(autoincrement())
+    external_id       String             @unique
+    attributes        Json
+    created_at        DateTime           @default(now())
+    Giveaway_Entrants Giveaway_Entrant[]
+    Giveaway          Giveaway[]
 }
