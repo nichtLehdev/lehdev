@@ -1,7 +1,5 @@
 import Link from "next/link";
 
-import { CreatePost } from "~/app/_components/create-post";
-
 export default function Home() {
   //const hello = await api.post.hello.query({ text: "from tRPC" });
 
@@ -49,7 +47,6 @@ function CrudShowcase() {
   return (
     <div className="w-full max-w-xs">
       <p>You have no posts yet.</p>
-      <CreatePost />
     </div>
   );
 }
