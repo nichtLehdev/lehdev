@@ -1,7 +1,7 @@
 import * as mariadb from 'mariadb';
-import { BahnDbConfig } from '../config/bahn.db';
-import { type Station as DbStation } from '../models/database/bahn';
-import { type Station as ApiStation } from '../models/outbound/bahn';
+import { BahnDbConfig } from '../../config/bahn.db';
+import { type Station as DbStation } from '../../models/database/bahn';
+import { type Station as ApiStation } from '../../models/outbound/bahn';
 
 const pool = mariadb.createPool(BahnDbConfig);
 

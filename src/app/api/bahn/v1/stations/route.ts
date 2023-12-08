@@ -1,4 +1,5 @@
-import { getAllStations } from "~/services/bahn";
+import { getAllStations } from "~/server/api/services/bahn";
+
 
 async function handler() {
     const stations = await getAllStations();
